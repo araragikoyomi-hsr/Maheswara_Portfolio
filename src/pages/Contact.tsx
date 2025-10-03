@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import {
   IconBrandWhatsapp,
   IconBrandCampaignmonitor,
-  IconBrandInstagram,
   IconBrandGithub,
   IconBrandLinkedin,
   IconHeadphones,
