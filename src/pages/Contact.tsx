@@ -27,7 +27,7 @@ export const Contact = () => {
       name: 'Email',
       image: <IconBrandCampaignmonitor style={iconStyles} />,
       description: 'maheswara.akilla@gmail.com',
-      link: 'mailto:maheswara.akilla@gmail.com',
+      link: 'https://mail.google.com/mail/?view=cm&to=maheswara.akilla@gmail.com',
     },
     {
       id: 3,

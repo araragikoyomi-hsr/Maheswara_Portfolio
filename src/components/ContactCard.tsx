@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 interface ContactCardProps {
   id: number;
@@ -11,16 +10,6 @@ interface ContactCardProps {
 
 export const ContactCard = (props: ContactCardProps) => {
   const { image, name, description, link } = props;
-  const [showCopy, setShowCopy] = useState(false);
-  const isMailto = link.startsWith('mailto:');
-  const emailAddress = isMailto ? link.replace('mailto:', '') : '';
-  
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(emailAddress);
-    setShowCopy(true);
-    setTimeout(() => setShowCopy(false), 2000);
-  };
-  
   return (
     <motion.div className="flex items-center space-x-4 w-full md:w-max min-w-[300px] p-4 rounded-xl bg-gray-900">
       <div className="w-20 h-20">{image}</div>
@@ -33,19 +22,11 @@ export const ContactCard = (props: ContactCardProps) => {
           <a
             rel="noopener noreferrer"
             href={link}
-            {...(!isMailto && { target: "_blank" })}
+            target="_blank"
             className="text-teal-600 hover:text-white hover:bg-teal-600 rounded-md p-1"
           >
             Send a message
           </a>
-          {isMailto && (
-            <button
-              onClick={handleCopyEmail}
-              className="text-teal-600 hover:text-white hover:bg-teal-600 rounded-md p-1"
-            >
-              {showCopy ? 'Copied!' : 'Copy email'}
-            </button>
-          )}
         </div>
       </div>
     </motion.div>

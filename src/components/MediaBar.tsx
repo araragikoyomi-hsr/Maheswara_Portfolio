@@ -17,7 +17,7 @@ export const MediaBar = () => {
     { icon: <IconBrandWhatsapp />, link: 'https://wa.me/+917337670458' },
     {
       icon: <IconBrandCampaignmonitor />,
-      link: 'mailto:maheswara.akilla@gmail.com',
+      link: 'https://mail.google.com/mail/?view=cm&to=maheswara.akilla@gmail.com',
     },
   ];
   const { container } = MediaBarMotion;
