@@ -1,48 +1,121 @@
-# Maheswara Portfolio
+# Maheswara Akilla — Portfolio
 
-A personal portfolio website built with React, TypeScript, and Tailwind CSS.  
-This project showcases my work, skills, and contact information in a clean, responsive design.  
-
----
-
-## Tech Stack
-
-**Frontend:** React 18, TypeScript, Tailwind CSS, Framer Motion  
-**Routing:** React Router DOM  
-**Build Tool / Bundler:** Vite  
-**Linting / Code Quality:** ESLint, @typescript-eslint  
-**Icons:** Tabler Icons  
+A single-page portfolio for **Maheswara Akilla**, mobile frontend engineer
+(React Native · Expo · TypeScript). Live at
+<https://maheswara-portfolio.vercel.app/>.
 
 ---
 
-## Features
+## Stack
 
-- Responsive design for desktop, tablet, and mobile
-- Smooth animations using Framer Motion
-- Single-page navigation with React Router
-- Easily customizable components
+| Concern | Choice |
+| --- | --- |
+| Framework | React 19 + TypeScript 5.9 (strict) |
+| Build | Vite 8 |
+| Styling | Tailwind CSS 4 (CSS-first `@theme` tokens, no JS config file) |
+| Animation | `motion` (Framer Motion 13) — reveals, spotlight cards, scroll progress |
+| Icons | `@tabler/icons-react` |
+| Fonts | Self-hosted Inter Variable + JetBrains Mono (latin subsets only) |
+| Linting | ESLint 9 flat config + typescript-eslint |
+| Hosting | Vercel (SPA rewrite in `vercel.json`) |
 
 ---
 
-## Getting Started
+## Editing content
 
-### Prerequisites
+**All site content lives in one file: [`src/data/portfolio.ts`](src/data/portfolio.ts).**
 
-- Node.js (v18+ recommended)
-- npm (v9+)
+Nothing else needs to change to update the portfolio:
 
-### Install Dependencies
+- `profile` — name, role, tagline, location, email, phone, avatar, résumé path,
+  `siteUrl`, hero intro and About prose
+- `socials` — the links in the sidebar, mobile menu and contact section
+- `navSections` — the section list; `index` is the `01.` … `06.` label
+- `experience` — roles with `highlights`, `tech`, optional `logo`
+- `projects` — `status` is `live` | `building` | `internal` and drives the badge
+- `skillGroups` — grouped skills; the group icon is chosen in
+  `src/components/sections/Skills.tsx`
+- `education`
+
+Types for every shape are in `src/types/portfolio.ts`.
+
+### Honesty rules followed by this site
+
+Your own readiness notes treat unverifiable claims as a failure mode, so:
+
+- No performance percentages or user counts are published — none were measured.
+- Employer work is described by feature and responsibility only: no internal
+  metrics, designs, screenshots, data or bank-integration specifics.
+- `ProofDrop` is labelled **In build** because the repository is public but the
+  implementation is still in progress. Move it to `live` only when the EAS
+  preview link and demo video exist.
+
+---
+
+## Getting started
 
 ```bash
 npm install
+npm run dev      # http://localhost:5173
 ```
-### Run Locally
-```bash
-npm run dev
+
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Vite dev server with HMR |
+| `npm run build` | `tsc` type-check, then a production build into `dist/` |
+| `npm run preview` | Serves the built output on http://localhost:4173 |
+| `npm run lint` | ESLint over the whole repo, fails on any warning |
+| `npm run og-image` | Regenerates `public/og-image.png` from `scripts/generate-og-image.mjs` |
+
+### Deploying
+
+`vercel.json` rewrites every non-asset path to `/`, so the single page also
+works on deep links. Push to `main` and let Vercel build, or run
+`npm run build` and deploy `dist/`.
+
+After the first deploy on a new domain, update `profile.siteUrl` plus the
+absolute `og:*` URLs and the sitemap in `index.html`, `public/robots.txt` and
+`public/sitemap.xml`.
+
+---
+
+## Assets
+
+| File | Notes |
+| --- | --- |
+| `public/Maheswara_resume.pdf` | Served by the "Download résumé" buttons |
+| `public/Maheswara_image.jpg` | Hero portrait (portrait crop, `object-top`) |
+| `public/og-image.png` | 1200×630 social preview, generated |
+| `public/favicon.svg` | Monogram favicon |
+| `public/*Logo.*` | Company / school logos, with a monogram fallback in `LogoBadge` |
+
+---
+
+## Project layout
+
 ```
-The Project will start on http://localhost:5173
-### Build for Production
-```bash
-npm run build
-npm run preview
+src/
+├── data/portfolio.ts           # every fact the site renders
+├── types/portfolio.ts          # content contracts
+├── hooks/                      # scroll-spy + document metadata
+├── lib/                        # cn() class merge, link helpers
+├── index.css                   # Tailwind entry, design tokens, spotlight/grid effects
+└── components/
+    ├── layout/                 # sidebar, mobile header, scroll progress, footer
+    ├── primitives/             # section, heading, card, tag, badge, button, reveal
+    ├── sections/               # hero, about, experience, projects, skills, education, contact
+    └── icons/                  # social icon mapping
 ```
+
+---
+
+## Design credits
+
+The layout language — dark navy canvas with a single bright accent, a fixed left
+sidebar with scroll-spy navigation, monospace section indices and spotlight-hover
+cards — is inspired by the most widely forked open-source developer portfolios,
+in particular [Brittany Chiang's v4](https://github.com/bchiang7/v4) (MIT,
+attribution requested) and
+[Magic Portfolio](https://github.com/once-ui-system/magic-portfolio) by Once UI.
+No code or assets were copied; the implementation here is original and the
+content is mine.

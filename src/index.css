@@ -1,71 +1,143 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* ---------------------------------------------------------------------------
+   Design tokens. Everything below is the single place to re-skin the site.
+   Inspired by the layout language of the most-forked developer portfolios
+   (dark navy canvas, slate text ramp, one bright accent, mono for metadata).
+--------------------------------------------------------------------------- */
+@theme {
+  --color-navy: #0a192f;
+  --color-navy-light: #112240;
+  --color-navy-lighter: #233554;
+  --color-slate-dim: #8892b0;
+  --color-slate-soft: #a8b2d1;
+  --color-slate-bright: #ccd6f6;
+  --color-ink: #e6f1ff;
+  --color-accent: #64ffda;
+  --color-accent-deep: #4ed9b8;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #1a1a1a;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
+  --animate-waving-hand: wave 2.4s ease-in-out infinite;
+  --animate-card-drift: card-drift 7s ease-in-out infinite;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+  @keyframes wave {
+    0%,
+    60%,
+    100% {
+      transform: rotate(0deg);
+    }
+    10%,
+    30% {
+      transform: rotate(14deg);
+    }
+    20% {
+      transform: rotate(-8deg);
+    }
+    40% {
+      transform: rotate(-4deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
   }
-  a:hover {
-    color: #747bff;
+
+  @keyframes card-drift {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchor targets clear of the sticky mobile header. */
+    scroll-padding-top: 6rem;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-navy);
+    color: var(--color-slate-dim);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-navy);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Cursor-following glow used on cards (the "spotlight" effect). */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    background: radial-gradient(
+      600px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgb(100 255 218 / 0.12),
+      transparent 45%
+    );
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before,
+  .spotlight:focus-within::before {
+    opacity: 1;
+  }
+
+  /* Faint grid backdrop for the hero block. */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(rgb(35 53 84 / 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(35 53 84 / 0.35) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at 30% 20%, #000 10%, transparent 70%);
   }
 }
