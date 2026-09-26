@@ -15,7 +15,7 @@ A single-page portfolio for **Maheswara Akilla**, mobile frontend engineer
 | Styling | Tailwind CSS 4 (CSS-first `@theme` tokens, no JS config file) |
 | Animation | `motion` (Framer Motion 13) — reveals, spotlight cards, scroll progress |
 | Icons | `@tabler/icons-react` |
-| Fonts | Self-hosted Inter Variable + JetBrains Mono (latin subsets only) |
+| Fonts | Self-hosted Inter Variable (weight axis) + JetBrains Mono 400/500/600 |
 | Linting | ESLint 9 flat config + typescript-eslint |
 | Hosting | Vercel (SPA rewrite in `vercel.json`) |
 
